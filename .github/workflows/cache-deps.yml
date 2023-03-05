@@ -1,4 +1,4 @@
-name: "Cache deps"
+name: "Packa"
 on:
   pull_request_target:
     types:
@@ -21,4 +21,6 @@ jobs:
     needs: build-deps
     runs-on: ubuntu-latest
     steps:
+        - uses: actions/checkout@v3
+        - uses: actions/setup-node@v3
         - run: npm run check:ts
