@@ -1,0 +1,8 @@
+src/
+test
+.idea
+index.ts
+jest.config.js
+tsconfig.json
+.prettierrc
+.eslintrc.json
