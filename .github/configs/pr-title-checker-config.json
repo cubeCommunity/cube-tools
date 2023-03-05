@@ -1,0 +1,18 @@
+{
+  "LABEL": {
+    "name": "Title needs formatting",
+    "color": "EEEEEE"
+  },
+  "CHECKS": {
+    "prefixes": [
+      "fix: ",
+      "feat: ",
+      "test: "
+    ]
+  },
+  "MESSAGES": {
+    "success": "All OK",
+    "failure": "PR title should match `^(feat|fix|test): *`",
+    "notice": ""
+  }
+}
