@@ -1,9 +1,11 @@
 name: "Branch/Build"
+
 on:
   pull_request:
     paths:
       - 'src/**'
       - 'test/**'
+
 jobs:
   check-ts:
     runs-on: ubuntu-latest
