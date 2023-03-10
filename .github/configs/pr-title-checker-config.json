@@ -7,12 +7,13 @@
     "prefixes": [
       "fix: ",
       "feat: ",
-      "test: "
+      "test: ",
+      "ci: "
     ]
   },
   "MESSAGES": {
     "success": "All OK",
-    "failure": "PR title should match `^(feat|fix|test): *`",
+    "failure": "PR title should match `^(feat|fix|test|ci): *`",
     "notice": ""
   }
 }
