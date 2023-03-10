@@ -1,6 +1,6 @@
 {
   "name": "@cube-community/cube-tools",
-  "version": "0.0.3-betta",
+  "version": "0.0.3",
   "description": "Useful JS/TS tools for Cube and Cube queries",
   "main": "dist/index.js",
   "scripts": {
