@@ -10,6 +10,9 @@ on:
       - 'package.json'
       - 'package-lock.json'
 
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
 # inherit from the build workflow
 jobs:
   check-ts:
@@ -57,12 +60,30 @@ jobs:
     needs: [ test ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: GH_TOKEN lookup
+        if: env.GH_TOKEN == ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo "GH_TOKEN=${GITHUB_TOKEN}" >> $GITHUB_ENV
+
+      - name: code checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: master
+          token: ${{ env.GH_TOKEN }}
+
+      - name: setup node
+        uses: actions/setup-node@v3
         with:
           registry-url: https://registry.npmjs.org/
-      - run: npm install
-      - run: npm run build
-      - run: npm publish --access public
+
+      - name: perform release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm i
+          npm run build
+          npx standard-version
+          git push --follow-tags origin main
+          npm publish --access public
