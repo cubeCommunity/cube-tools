@@ -3,7 +3,7 @@
 ### TODO:
 
 - [ ] Improve CI autopublish
-- [ ] Move tests to 
+- [ ] Move tests to vitest
 - [ ] date format
 - [ ] float(number?) format
 - [ ] boolean format
