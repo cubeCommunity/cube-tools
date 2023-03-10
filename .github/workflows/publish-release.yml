@@ -82,6 +82,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
+          git config --global user.email "eastyler@gmail.com"
+          git config --global user.name "Viktor Loktionov (auto)"
           npm i
           npm run build
           npx standard-version
