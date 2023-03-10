@@ -2,7 +2,7 @@
 
 ### TODO:
 
-- [ ] Improve CI autopublish
+- [x] Improve CI autopublish
 - [ ] date format
 - [ ] float(number?) format
 - [ ] boolean format
