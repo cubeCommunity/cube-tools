@@ -1,26 +1,13 @@
 name: "Branch/Build"
 
 on:
-  pull_request
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'test/**'
 
 jobs:
-  paths-filter:
-    runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.filter.outputs.workflows }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            typescript:
-              - 'src/**'
-              - 'test/**'
-
   check-ts:
-    needs: paths-filter
-    if: needs.paths-filter.outputs.typescript == 'true'
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v3
@@ -31,8 +18,6 @@ jobs:
         - run: npm run check:ts
 
   check-lint:
-    needs: paths-filter
-    if: needs.paths-filter.outputs.typescript == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -43,8 +28,6 @@ jobs:
       - run: npm run check:lint
 
   check-prettier:
-    needs: paths-filter
-    if: needs.paths-filter.outputs.typescript == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
