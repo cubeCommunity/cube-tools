@@ -7,8 +7,6 @@ on:
       - 'src/**'
       - 'test/**'
       - 'index.ts'
-      - 'package.json'
-      - 'package-lock.json'
 
 env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
