@@ -6,6 +6,9 @@ on:
     paths:
       - 'src/**'
       - 'test/**'
+      - 'index.ts'
+      - 'package.json'
+      - 'package-lock.json'
 
 # inherit from the build workflow
 jobs:
