@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/cubeCommunity/cube-tools/compare/v0.0.5...v0.0.6) (2023-04-05)
+
+
+### Bug Fixes
+
+* CBTL-14 removing and replacement in filter dimension ([#17](https://github.com/cubeCommunity/cube-tools/issues/17)) ([a573e96](https://github.com/cubeCommunity/cube-tools/commit/a573e9687699b196f88049433d422677c297e29c))
+
 ### [0.0.5](https://github.com/cubeCommunity/cube-tools/compare/v0.0.4...v0.0.5) (2023-04-05)
 
 
