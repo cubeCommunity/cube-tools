@@ -79,6 +79,18 @@ describe("query Json utils", () => {
     },
   };
 
+  const dimensionFilterReportMock: Query = {
+    ...queryJsonBaseMock,
+    filters: [
+      {
+        dimension: "Tasks.createdAt",
+        values: ["2022-12-01 00:00:00", "2022-12-31 23:59:59"],
+        operator: "inDateRange",
+      },
+      { member: "Teams.name", values: ["IL - P"], operator: "contains" },
+    ],
+  };
+
   describe("replaceQueryJSONMember", () => {
     it("should replace member in query json for base format", () => {
       expect(replaceQueryMember(queryJsonBaseMock, "Tasks.createdAt", "Tasks.fantasticDimension")).toEqual({
@@ -89,6 +101,54 @@ describe("query Json utils", () => {
         filters: [
           {
             member: "Tasks.fantasticDimension",
+            values: ["2022-12-01 00:00:00", "2022-12-31 23:59:59"],
+            operator: "inDateRange",
+          },
+          { member: "Teams.name", values: ["IL - P"], operator: "contains" },
+        ],
+        measures: [
+          "Tasks.fantasticDimension",
+          "WayPoint2.address",
+          "WayPoint2.city",
+          "WayPoint2.name",
+          "WayPoint2.pickupOrDropoff",
+        ],
+        dimensions: [
+          "Tasks.id",
+          "WayPoint2.address",
+          "WayPoint2.city",
+          "WayPoint2.name",
+          "WayPoint2.pickupOrDropoff",
+          "Teams.name",
+          "Users.name",
+          "InventoriesWayPoint2.name",
+          "Tasks.vehicleId",
+          "Tasks.fantasticDimension",
+          "Tasks.startedTime",
+          "Tasks.status",
+        ],
+        timeDimensions: [
+          {
+            dateRange: ["2022-11-27 00:00:00", "2023-01-03 23:59:00"],
+            dimension: "Tasks.fantasticDimension",
+          },
+          {
+            dateRange: ["2022-11-27 00:00:00", "2023-01-03 23:59:00"],
+            dimension: "Tasks.scheduledAt",
+          },
+        ],
+      });
+    });
+
+    it("should replace member in query json for dimension filter", () => {
+      expect(replaceQueryMember(dimensionFilterReportMock, "Tasks.createdAt", "Tasks.fantasticDimension")).toEqual({
+        order: [
+          ["Tasks.fantasticDimension", "desc"],
+          ["WayPoint2.address", "asc"],
+        ],
+        filters: [
+          {
+            dimension: "Tasks.fantasticDimension",
             values: ["2022-12-01 00:00:00", "2022-12-31 23:59:59"],
             operator: "inDateRange",
           },
@@ -200,6 +260,33 @@ describe("query Json utils", () => {
   describe("removeQueryJSONMember", () => {
     it("should remove member in query json for base format", () => {
       expect(removeQueryMember(queryJsonBaseMock, "Tasks.createdAt")).toEqual({
+        order: [["WayPoint2.address", "asc"]],
+        filters: [{ member: "Teams.name", values: ["IL - P"], operator: "contains" }],
+        measures: ["WayPoint2.address", "WayPoint2.city", "WayPoint2.name", "WayPoint2.pickupOrDropoff"],
+        dimensions: [
+          "Tasks.id",
+          "WayPoint2.address",
+          "WayPoint2.city",
+          "WayPoint2.name",
+          "WayPoint2.pickupOrDropoff",
+          "Teams.name",
+          "Users.name",
+          "InventoriesWayPoint2.name",
+          "Tasks.vehicleId",
+          "Tasks.startedTime",
+          "Tasks.status",
+        ],
+        timeDimensions: [
+          {
+            dateRange: ["2022-11-27 00:00:00", "2023-01-03 23:59:00"],
+            dimension: "Tasks.scheduledAt",
+          },
+        ],
+      });
+    });
+
+    it("should remove member in query json for dimension filter", () => {
+      expect(removeQueryMember(dimensionFilterReportMock, "Tasks.createdAt")).toEqual({
         order: [["WayPoint2.address", "asc"]],
         filters: [{ member: "Teams.name", values: ["IL - P"], operator: "contains" }],
         measures: ["WayPoint2.address", "WayPoint2.city", "WayPoint2.name", "WayPoint2.pickupOrDropoff"],
