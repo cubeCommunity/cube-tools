@@ -1,5 +1,6 @@
 import { Query } from "@cubejs-client/core";
-import { removeQueryJSONMember, replaceQueryJSONMember } from "../src/query-json.utils";
+import { removeQueryMember } from "../src/query-util/remove-query-member";
+import { replaceQueryMember } from "../src/query-util/replace-query-member";
 
 describe("query Json utils", () => {
   const queryJsonBaseMock: Query = {
@@ -80,7 +81,7 @@ describe("query Json utils", () => {
 
   describe("replaceQueryJSONMember", () => {
     it("should replace member in query json for base format", () => {
-      expect(replaceQueryJSONMember(queryJsonBaseMock, "Tasks.createdAt", "Tasks.fantasticDimension")).toEqual({
+      expect(replaceQueryMember(queryJsonBaseMock, "Tasks.createdAt", "Tasks.fantasticDimension")).toEqual({
         order: [
           ["Tasks.fantasticDimension", "desc"],
           ["WayPoint2.address", "asc"],
@@ -128,7 +129,7 @@ describe("query Json utils", () => {
     });
 
     it("should replace member in query json for another format", () => {
-      expect(replaceQueryJSONMember(anotherFormatReportMock, "Tasks.createdAt", "Tasks.fantasticDimension")).toEqual({
+      expect(replaceQueryMember(anotherFormatReportMock, "Tasks.createdAt", "Tasks.fantasticDimension")).toEqual({
         filters: [
           {
             and: [
@@ -198,7 +199,7 @@ describe("query Json utils", () => {
 
   describe("removeQueryJSONMember", () => {
     it("should remove member in query json for base format", () => {
-      expect(removeQueryJSONMember(queryJsonBaseMock, "Tasks.createdAt")).toEqual({
+      expect(removeQueryMember(queryJsonBaseMock, "Tasks.createdAt")).toEqual({
         order: [["WayPoint2.address", "asc"]],
         filters: [{ member: "Teams.name", values: ["IL - P"], operator: "contains" }],
         measures: ["WayPoint2.address", "WayPoint2.city", "WayPoint2.name", "WayPoint2.pickupOrDropoff"],
@@ -225,7 +226,7 @@ describe("query Json utils", () => {
     });
 
     it("should remove member in query json for another format", () => {
-      expect(removeQueryJSONMember(anotherFormatReportMock, "Tasks.createdAt")).toEqual({
+      expect(removeQueryMember(anotherFormatReportMock, "Tasks.createdAt")).toEqual({
         measures: ["WayPoint2.address", "WayPoint2.city", "WayPoint2.name", "WayPoint2.pickupOrDropoff"],
         dimensions: [
           "Tasks.id",
@@ -269,9 +270,9 @@ describe("query Json utils", () => {
     it("should remove all filters if `and` or `or` array of filter is empty", () => {
       let queryJsonResult: Query = { ...anotherFormatReportMock };
 
-      queryJsonResult = removeQueryJSONMember(queryJsonResult, "Tasks.createdAt");
-      queryJsonResult = removeQueryJSONMember(queryJsonResult, "Teams.name");
-      queryJsonResult = removeQueryJSONMember(queryJsonResult, "WayPoint1.name");
+      queryJsonResult = removeQueryMember(queryJsonResult, "Tasks.createdAt");
+      queryJsonResult = removeQueryMember(queryJsonResult, "Teams.name");
+      queryJsonResult = removeQueryMember(queryJsonResult, "WayPoint1.name");
 
       expect(queryJsonResult).toEqual({
         measures: ["WayPoint2.address", "WayPoint2.city", "WayPoint2.name", "WayPoint2.pickupOrDropoff"],
