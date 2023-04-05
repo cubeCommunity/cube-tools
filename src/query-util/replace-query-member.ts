@@ -4,7 +4,15 @@ import { isDefined } from "../base.helpers";
 
 const replaceInFilter = (filter: Filter, needle: string, replacement: string): Filter => {
   if (isBinaryOrUnaryFilter(filter)) {
-    return filter.member === needle ? { ...filter, member: replacement } : filter;
+    if (filter.member === needle) {
+      return { ...filter, member: replacement };
+    }
+
+    if (filter.dimension === needle) {
+      return { ...filter, dimension: replacement };
+    }
+
+    return filter;
   }
 
   if (isLogicalAndFilter(filter)) {

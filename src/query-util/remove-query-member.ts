@@ -5,7 +5,7 @@ import { isBinaryOrUnaryFilter, isLogicalAndFilter, isObjectOrder } from "../que
 const removeInFilters = (filters: Filter[], needle: string): Filter[] => {
   return filters.filter((filter) => {
     if (isBinaryOrUnaryFilter(filter)) {
-      return filter.member !== needle;
+      return filter.member !== needle || filter.dimension !== needle;
     }
 
     if (isLogicalAndFilter(filter)) {
